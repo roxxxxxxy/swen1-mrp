@@ -1,5 +1,7 @@
 package at.technikum.controller;
 
+import at.technikum.model.User;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
@@ -16,6 +18,9 @@ import java.io.IOException;
 // Kurz: Die Klasse hier erfüllt den "Vertrag" HttpHandler. Dadurch kann der Server sie benutzen.
 public class UserController implements HttpHandler
 {
+    // JSON in den Controller einlesen: ObjectMapper für JSON zu Java-Objekten
+    private final ObjectMapper mapper = new ObjectMapper();     // final: das Feld wird einmal gesetzt und nie mehr geändert
+
     @Override
     public void handle(HttpExchange exchange) throws IOException        // exchange = Gespräch mit dem Client; darüber Anfrage lesen und Antwort schicken
     {
@@ -24,7 +29,11 @@ public class UserController implements HttpHandler
 
         if (method.equals("POST") && path.equals ("/api/users/register"))
         {
-            sendResponse(exchange, 201, "Register aufgerufen");
+            // JSON-Body auslesen
+            // ; den Body der Anfrage bekommt man mit exchange.getRequestBody(). Der Mapper macht daraus dann das Objekt
+            User user = mapper.readValue(exchange.getRequestBody(), User.class);
+
+            sendResponse(exchange, 201, "User " + user.getUsername() + " registriert");
         }
         else if (method.equals("POST") && path.equals("/api/users/login"))
         {

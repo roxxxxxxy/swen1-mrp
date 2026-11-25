@@ -14,4 +14,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>       // groupId = wer die Bib macht, wie ein Firmenname
+            <artifactId>jackson-databind</artifactId>           // artifactId = welche Bib genau
+            <version>2.18.2</version>
+        </dependency>
+    </dependencies>
+
 </project>
