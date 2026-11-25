@@ -20,6 +20,14 @@ public class User
         this.password = password;
     }
 
+    // Dritter, leerer Konstruktor für Jackson, um aus JSON ein Objekt zu machen
+    // ; Jackson erstellt zuerst ein leeres Objekt und füllt es dann über die Setter
+    public User()
+    {
+
+    }
+
+
     // Getter und Setter
     public int getId()
     {
