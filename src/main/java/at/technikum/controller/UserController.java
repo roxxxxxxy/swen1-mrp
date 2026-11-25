@@ -24,24 +24,23 @@ public class UserController implements HttpHandler
 
         if (method.equals("POST") && path.equals ("/api/users/register"))
         {
-            String antwort = "Register aufgerufen";
-            exchange.sendResponseHeaders(201, antwort.getBytes().length);   // Code 201 = created; .getBytes() wandelt den Text in Bytes um, weil übers Netzwerk nur Bytes gehen; .length sagt, wieviele Bytes das sind
-            exchange.getResponseBody().write(antwort.getBytes());
-            exchange.close();
+            sendResponse(exchange, 201, "Register aufgerufen");
         }
         else if (method.equals("POST") && path.equals("/api/users/login"))
         {
-            String antwort = "Login aufgerufen";
-            exchange.sendResponseHeaders(200, antwort.getBytes().length);   // 200 = OK
-            exchange.getResponseBody().write(antwort.getBytes());
-            exchange.close();
+            sendResponse(exchange, 200, "Login aufgerufen");
         }
         else
         {
-            String antwort = "Not found";
-            exchange.sendResponseHeaders(404, antwort.getBytes().length);
-            exchange.getResponseBody().write(antwort.getBytes());
-            exchange.close();
+            sendResponse(exchange, 404, "Not found");
         }
+    }
+
+    private void sendResponse(HttpExchange exchange, int statusCode, String text) throws IOException        // private, weil nur der UserController selber die Methode braucht
+    {
+        String antwort = text;
+        exchange.sendResponseHeaders(statusCode, antwort.getBytes().length);
+        exchange.getResponseBody().write(antwort.getBytes());
+        exchange.close();
     }
 }
