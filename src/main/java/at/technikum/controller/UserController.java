@@ -8,7 +8,7 @@ import java.io.IOException;
 
 // UserController ist nur der "Empfang", gibt nur an die Serviceschicht weiter.
 // Nimmt alle HTTP-Anfragen an, die mit Usern zutun haben (registrieren, login);
-// schaut sich an, welche HTTP-Methode (GET, POST, ...); welcher PFad (/api/users/...)
+// schaut sich an, welche HTTP-Methode (GET, POST, ...); welcher Pfad (/api/users/...)
 // -> emtscheidet danach, was passieren soll und schickt Antwort mit Statuscode zurück
 
 // "implements HttpHandler": Art Vertrag mit dem Java-HttpServer.

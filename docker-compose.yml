@@ -1,0 +1,24 @@
+# PostgreSQL-Datenbank in einem Docker-Container gestartet; konfiguriert ist sie über diese Datei hier.
+# YAML: Textdatei für Konfigurationen, ähnlich wie JSON
+
+services:
+  db:
+    image: postgres:17    # Das offizielle PostgreSQL-Paket
+    container_name: mrp-db    # Name des Containers
+    environment:            # Umgebungsvariablen, also Einstellungen beim Start
+      POSTGRES_USER: mrpuser
+      POSTGRES_PASSWORD: mrppassword
+      POSTGRES_DB: mrp
+
+    # Port-Weiterleitung; Port 5432 auf meinem Rechner wird an Port 5432 im Container weitergeleitet.
+    # ; nur so kann das Javaprogramm von außen mit der Datenbank reden.
+    # 5432 ist der Standardport von PostgreSQL.
+    ports:
+      - "5432:5432"
+
+    # Die Daten der Datenbank werden außerhalb des Containers gespeichert, ohne Volume wären alle Datem weg, sobald man den Container löscht.
+    volumes:
+      - mrp-data:/var/lib/postgresql/data
+
+volumes:
+  mrp-data:
