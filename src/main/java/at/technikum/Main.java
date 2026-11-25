@@ -1,5 +1,7 @@
 package at.technikum;
 
+import at.technikum.controller.UserController;
+import at.technikum.model.User;
 import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -9,7 +11,7 @@ public class Main
 
     // IOException = Fehler bei Ein-/Ausgabe (Netzwerk, Dateien, Ports), zB wenn Port 8080 schon belegt ist.
     // Java zwingt einen hier zu entscheiden: abfangen (try/catch) oder weiterreichen (throws)
-    // Hier: weiterreichen, weil das Programm ohne Server eh nix tun kann; -> es bricht dann mit Fehlermeldung ab
+    // Hier: weiterreichen, weil das Programm ohne Server eh nix tun kann; -> es bricht dann mit Fehlermeldung ab, weil es in main niemanden darüber mehr gibt
 
     static void main() throws IOException
     {
@@ -35,6 +37,9 @@ public class Main
             // Anfrage abschließen; fertisch
             exchange.close();
         });
+
+        // Alle Anfragen, deren Pfad mit /api/users beginnt, gehen an den UserController. Mit new UserController erzeugt man dafür ein Objekt der Klasse
+        server.createContext("/api/users", new UserController());
 
         // 3. Server starten
         server.start();
